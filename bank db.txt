@@ -1,0 +1,58 @@
+create table branch(
+bname varchar2(20),
+bcity varchar2(20),
+assents number(9,2),
+primary key (bname)
+);
+
+create table accounts(
+bname varchar2(20),
+accno number(10),
+balance number(9,2),
+primary key(accno),
+foreign key (bname) references branch(bname)    
+);
+    
+create table depositor(
+cname varchar2(20),
+accno number(10),
+primary key(cname,accno),
+foreign key (accno) references accounts(accno),
+foreign key (cname) references customer(cname)
+);
+
+create table customer(
+cname varchar2(20),
+cstreet varchar2(20),
+city varchar2(20),
+primary key (cname)
+);
+    
+create table loan(
+loanNo number(10),
+amount number(9,2),
+bname varchar2(20),
+primary key (loanNo),
+foreign key (bname) references branch(bname)    
+);
+
+create table borrower(
+cname varchar2(20),
+loanNo number(10),
+primary key (cname),
+foreign key (loanNo) references loan(loanNo),
+foreign key (cname) references customer(cname)
+);
+
+insert into branch values('A5', 'C4', 12345.69);
+
+insert into accounts values('A5', 7654321, 2198.1);
+insert into accounts values('A3', 7654322, 34555.1);
+insert into accounts values('A1', 7654323, 123456.1);
+insert into accounts values('A2', 7654324, 1234.1);
+insert into accounts values('A4', 7654325, 54678.1);
+commit;
+
+
+
+select * from branch; 
